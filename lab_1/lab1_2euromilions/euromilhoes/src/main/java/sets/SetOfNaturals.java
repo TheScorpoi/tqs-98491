@@ -16,9 +16,7 @@ public class SetOfNaturals implements Iterable<Integer> {
 		if (element <= 0) {
 			throw new IllegalArgumentException("Illegal argument: not a natural number");
 		}
-
 		collection.add(element);
-
 	}
 
 	public void add(int[] numbers) {
@@ -35,11 +33,9 @@ public class SetOfNaturals implements Iterable<Integer> {
 		return newSet;
 	}
 
-
 	public int size() {
 		return this.collection.size();
 	}
-
 
 	public boolean intersects(SetOfNaturals subset) {
 		return false;
@@ -53,7 +49,6 @@ public class SetOfNaturals implements Iterable<Integer> {
 	public Iterator<Integer> iterator() {
 		return collection.iterator();
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -77,6 +72,5 @@ public class SetOfNaturals implements Iterable<Integer> {
 		final SetOfNaturals other = (SetOfNaturals) obj;
 		return Objects.equals(this.collection, other.collection);
 	}
-
 
 }

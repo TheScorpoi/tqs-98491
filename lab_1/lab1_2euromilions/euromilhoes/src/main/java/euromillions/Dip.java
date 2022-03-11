@@ -5,6 +5,7 @@ import java.util.Objects;
 import sets.SetOfNaturals;
 
 import java.util.Random;
+import java.util.function.BooleanSupplier;
 
 /**
  * A set of 5 numbers and 2 starts according to the Euromillions ranges.
@@ -12,6 +13,15 @@ import java.util.Random;
  * @author ico0
  */
 public class Dip {
+
+    static final int NUMBERS_LENGTH = 5;
+    static final int STARS_LENGTH = 2;
+
+    static final int NUMBER_MIN = 1;
+    static final int NUMBER_MAX = 50;
+    
+    static final int STAR_MIN = 1;
+    static final int STAR_MAX = 12;
 
 
     private SetOfNaturals numbers;
@@ -25,7 +35,7 @@ public class Dip {
     public Dip(int[] arrayOfNumbers, int[] arrayOfStarts) {
         this();
 
-        if (5 == arrayOfNumbers.length && 2 == arrayOfStarts.length) {
+        if (NUMBERS_LENGTH == arrayOfNumbers.length && STARS_LENGTH == arrayOfStarts.length) {
             numbers.add(arrayOfNumbers);
             starts.add(arrayOfStarts);
         } else {
@@ -46,15 +56,15 @@ public class Dip {
         Random generator = new Random();
 
         Dip randomDip = new Dip();
-        for (int i = 0; i < 5; ) {
-            int candidate = generator.nextInt(49) + 1;
+        for (int i = 0; i < 5;) {
+            int candidate = generator.nextInt(NUMBER_MAX - 1) + 1;
             if (!randomDip.getNumbersColl().contains(candidate)) {
                 randomDip.getNumbersColl().add(candidate);
                 i++;
             }
         }
-        for (int i = 0; i < 2; ) {
-            int candidate = generator.nextInt(9) + 1;
+        for (int i = 0; i < 2;) {
+            int candidate = generator.nextInt(STAR_MAX - 1) + 1;
             if (!randomDip.getStarsColl().contains(candidate)) {
                 randomDip.getStarsColl().add(candidate);
                 i++;
@@ -62,7 +72,16 @@ public class Dip {
         }
         return randomDip;
     }
-
+    
+    public boolean checkStarRange() {
+        for (int star : starts) {
+            if (star < STAR_MIN || star > STAR_MAX) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;
@@ -104,8 +123,12 @@ public class Dip {
         }
         sb.append("] S[");
         for (int star : getStarsColl()) {
-            sb.append(String.format("%d", star));
+            sb.append(String.format("  %d", star));
         }
+        sb.append("]");
+        System.out.println(sb.toString());
         return sb.toString();
     }
+
+    
 }
