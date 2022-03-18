@@ -15,6 +15,7 @@ import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ class AddressResolverTest {
 
         Optional<Address> result = addressResolver.findAddressForLocation(40.640661, -8.656688);
 
-        assertEquals(result, new Address("Cais do Alboi", "Gloria e Vera Cruz", "Centro", "3800-246", null));
+        assertEquals(result, Optional.of(new Address("Cais do Alboi", "Glória e Vera Cruz", "Centro", "3800-246", null)));
     }
 
     @Test
