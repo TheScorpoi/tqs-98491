@@ -34,8 +34,11 @@ public class AddressResolver {
         this.httpClient = httpClient;
     }
 
-
     public Optional<Address> findAddressForLocation(double latitude, double longitude) throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
+        
+        if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+            return Optional.empty();
+        }
 
         String apiKey = ConfigUtils.getPropertyFromConfig("mapquest_key");
 
