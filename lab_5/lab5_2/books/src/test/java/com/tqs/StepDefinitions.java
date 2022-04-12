@@ -1,18 +1,18 @@
 package com.tqs;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.ParameterType;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.time.LocalDate;
+import java.util.List;
 
-
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import io.cucumber.java.ParameterType;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 
 public class StepDefinitions {
@@ -21,23 +21,30 @@ public class StepDefinitions {
     private List<Book> booksList = new ArrayList<>();
 
     @ParameterType("([0-9]{4})-([0-9]{2})-([0-9]{2})")
-    public LocalDate iso8601Date(String year, String month, String day){
-        return LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+    public LocalDateTime iso8601Date(String year, String month, String day){
+        return LocalDateTime.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
     @Given("a book with the title {string}, written by {string}, published in {iso8601Date}")
-    public void a_book_with_the_title_written_by_published_in(String title, String author, LocalDate date) {
+    public void a_book_with_the_title_written_by_published_in(String title, String author, LocalDateTime date) {
         library.addBook(new Book(title, author, date));
     }
 
     @Given("another book with the title {string}, written by {string}, published in {iso8601Date}") 
-    public void another_book_with_the_title_written_by_published_in(String title, String author, LocalDate date) {
+    public void another_book_with_the_title_written_by_published_in(String title, String author, LocalDateTime date) {
         library.addBook(new Book(title, author, date));
     }
 
-    @When("the customer searches for books published between {iso8601Date} and {iso8601Date}")
-    public void the_customer_searches_for_books_published_between_and(LocalDate from, LocalDate to) {
-        booksList = library.findBooks(from, to);    
+    @When("the customer searches for books published between {int} and {int}")
+    public void the_customer_searches_for_books_published_between_and(Integer from, Integer to) {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy");
+		try {
+			Date inicio = originalFormat.parse(from.toString());
+			Date fim = originalFormat.parse(to.toString());
+            booksList = library.findBooks(inicio, fim);    
+		} catch (ParseException var4) {
+			var4.printStackTrace();
+		}
     }
 
     @Then("{int} books should have been found")

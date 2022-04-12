@@ -1,0 +1,7 @@
+version: '2'
+   services:
+      my-sonar:
+         image: sonarqube:7.1
+         platform: linux/amd64
+         ports:
+            - 9000:9000
