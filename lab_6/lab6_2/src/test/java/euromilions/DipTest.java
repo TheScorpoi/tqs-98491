@@ -11,7 +11,7 @@ import org.junit.jupiter.api.*;
 /**
  * @author ico0
  */
-class DipTest {
+public class DipTest {
 
     private Dip instance;
 
@@ -30,7 +30,7 @@ class DipTest {
     }
 
     @Test
-     void testConstructorFromBadArrays() {
+    public void testConstructorFromBadArrays() {
         assertThrows(IllegalArgumentException.class,
             () -> { instance = new Dip(new int[] { 10, 20, 30, 40, 50 }, new int[] { 1, 2, 3 });} , "Número de estrelas tem de ser igual a 2");
         assertThrows(IllegalArgumentException.class,
@@ -40,7 +40,7 @@ class DipTest {
     }
 
     @Test
-     void testFormat() {
+    public void testFormat() {
         // note: correct the implementation of the format(), not the test...
         String result = instance.format();
         assertEquals("N[ 10 20 30 40 50] S[  1  2]", result, "format as string: formatted string not as expected. ");
@@ -49,7 +49,7 @@ class DipTest {
     //2b)
     @DisplayName("Teste para verificar se as estrelas estão dentro do intervalo (1..12)")
     @Test
-     void checkStarRange() {
+    public void checkStarRange() {
         instance = new Dip(new int[] { 13, 24, 34, 45, 51 }, new int[] { 12, 23 });
         assertFalse(instance.checkStarRange(), "As estrelas só podem ser números entre 1 e 12");
 

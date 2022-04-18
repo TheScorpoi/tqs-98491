@@ -5,6 +5,7 @@ import java.util.Objects;
 import sets.SetOfNaturals;
 
 import java.util.Random;
+import java.util.function.BooleanSupplier;
 
 /**
  * A set of 5 numbers and 2 starts according to the Euromillions ranges.

@@ -10,7 +10,7 @@ class EuromillionsDrawTest {
 
 
     @BeforeEach
-     void setUp() throws Exception {
+    public void setUp() throws Exception {
         sampleCuppon = new CuponEuromillions();
         sampleCuppon.addDipToCuppon(Dip.generateRandomDip());
         sampleCuppon.addDipToCuppon(Dip.generateRandomDip());
@@ -19,7 +19,7 @@ class EuromillionsDrawTest {
 
 
     @Test
-     void testFindMatches() {
+    public void testFindMatches() {
         Dip expected, actual;
 
         // test for perfect match on the 3rd dip
