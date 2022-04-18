@@ -19,6 +19,7 @@ public class Library {
     	Calendar end = Calendar.getInstance();
 		end.setTime(to);
 		end.roll(Calendar.YEAR, 1);
+		System.out.println(end.getTime());
  
 		return store.stream().filter(book -> {
 			return from.before(book.getPublished()) && end.getTime().after(book.getPublished());
