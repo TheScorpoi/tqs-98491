@@ -17,7 +17,7 @@ public class CarRepositoryTest {
 
     @Test
     public void whenFindByModel_thenReturnCar() {
-        Car car = new Car("Ford", "Fiesta");
+        Car car = new Car("Audi", "A4");
         entityManager.persistAndFlush(car);
 
         Car foundCar = carRepository.findByModel(car.getModel());

@@ -2,7 +2,7 @@
 
 ## Como correr o docker do SonarQube no Mac M1
  - docker pull davealdon/sonarqube-with-docker-and-m1-macs
- - docker run davealdon/sonarqube-with-docker-and-m1-macs -p 9000
+ - docker run -p 9000 davealdon/sonarqube-with-docker-and-m1-macs
  - localhost:????? esta porta é sempre uma diferente (fazer docker ps -a ou ir ao docker desktop para ver qual é)
 
 Nova password: admin1

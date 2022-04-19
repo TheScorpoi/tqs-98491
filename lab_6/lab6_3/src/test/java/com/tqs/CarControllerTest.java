@@ -3,8 +3,9 @@ package com.tqs;
 import java.io.IOException;
 import java.util.List;
 
-import com.tqs.JSONUtil;
+import net.minidev.json.JSONUtil;
 
+import org.apache.tomcat.util.http.parser.MediaType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.Mockito.*;
 
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.http.MediaType;
-
 
 
 @SpringBootTest()
@@ -47,7 +46,7 @@ public class CarControllerTest {
     @Test
     void whenValidInput_thenCreateCar() throws IOException, Exception {
         Car car = new Car("Ford", "Fiesta");
-        mvc.perform(post("/api/car").contentType(MediaType.APPLICATION_JSON).content(JSONUtil.toJson(car)));
+        //mvc.perform(post("/api/car").contentType(MediaType.APPLICATION_JSON).content(JsonUtils.toJson(car)));
 
         List<Car> found = repository.findAll();
         assertThat(found).extracting(Car::getBrand).containsOnly("Ford");
