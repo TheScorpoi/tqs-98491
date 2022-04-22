@@ -53,9 +53,15 @@ public class CovidAPI {
         builder.setParameter("country", country);
         builder.setParameter("day", day);
         
-        String apiResponse = httpClient.request(builder.build().toString());
-    
-        return convertJsonToByCountryClassWithDates(apiResponse);
+        if (covidCache.getCovidDataByCountryAndDay(country, day) == null) {
+            String apiResponse = httpClient.request(builder.build().toString());
+            ByCountry result = convertJsonToByCountryClass(apiResponse);
+            byCountryRepository.save(result);
+            return result;
+        } else {
+            return covidCache.getCovidDataByCountryAndDay(country, day);
+        }
+
     }
 
     public ByCountry convertJsonToByCountryClass(String apiResponse) throws ParseException {
@@ -70,7 +76,15 @@ public class CovidAPI {
         Long population = obj.getJSONArray("response").getJSONObject(0).getLong("population");
 
         Object obj_new_cases = obj.getJSONArray("response").getJSONObject(0).getJSONObject("cases").get("new");
-        int new_cases = verifyIfObjectHaveNullValue(obj_new_cases) ? 0 : (Integer) obj_new_cases;
+        int new_cases;
+        if (obj_new_cases.equals(null)) {
+            new_cases = 0;
+        } else {
+            String new_cases_string = obj_new_cases.toString();
+            String splited = new_cases_string.replace("+", "");
+            new_cases = Integer.parseInt(splited);
+        }
+
         Object obj_active_cases = obj.getJSONArray("response").getJSONObject(0).getJSONObject("cases").get("active");
         int active_cases = verifyIfObjectHaveNullValue(obj_active_cases) ? 0 : (Integer) obj_active_cases;
         Object obj_critical_cases = obj.getJSONArray("response").getJSONObject(0).getJSONObject("cases")
@@ -86,7 +100,15 @@ public class CovidAPI {
         int total_cases = verifyIfObjectHaveNullValue(obj_total_cases) ? 0 : (Integer) obj_total_cases;
 
         Object obj_new_deaths = obj.getJSONArray("response").getJSONObject(0).getJSONObject("deaths").get("new");
-        int new_deaths = verifyIfObjectHaveNullValue(obj_new_deaths) ? 0 : (Integer) obj_new_deaths;
+        int new_deaths;
+        if (obj_new_deaths.equals(null)) {
+            new_deaths = 0;
+        } else {
+            String new_deaths_string = obj_new_deaths.toString();
+            String splited = new_deaths_string.replace("+", "");
+            new_deaths = Integer.parseInt(splited);
+        }
+
         String obj_deaths_per_million = obj.getJSONArray("response").getJSONObject(0).getJSONObject("deaths")
                 .getString("1M_pop");
         int deaths_per_million = Integer.parseInt(obj_deaths_per_million);
@@ -147,13 +169,29 @@ public class CovidAPI {
         }
 
         Object obj_deaths_per_million = obj.getJSONArray("response").getJSONObject(0).getJSONObject("deaths").get("1M_pop");
-        int deaths_per_million = verifyIfObjectHaveNullValue(obj_deaths_per_million) ? 0 : (Integer) obj_deaths_per_million;
+        int deaths_per_million;
+        if (obj_deaths_per_million.equals(null)) {
+            deaths_per_million = 0;
+        } else {
+            String deaths_per_million_string = obj_deaths_per_million.toString();
+            String splited = deaths_per_million_string.replace("+", "");
+            deaths_per_million = Integer.parseInt(splited);
+        }
         
         Object obj_total_deaths = obj.getJSONArray("response").getJSONObject(0).getJSONObject("deaths").get("total");
         int total_deaths = verifyIfObjectHaveNullValue(obj_total_deaths) ? 0 : (Integer) obj_total_deaths;
 
         Object obj_tests_per_million = obj.getJSONArray("response").getJSONObject(0).getJSONObject("tests").get("1M_pop");
-        int tests_per_million = verifyIfObjectHaveNullValue(obj_tests_per_million) ? 0 : (Integer) obj_tests_per_million;
+        int tests_per_million;
+        if (obj_tests_per_million.equals(null)) {
+            tests_per_million = 0;
+        } else {
+            String tests_per_million_string = obj_tests_per_million.toString();
+            String splited = tests_per_million_string.replace("+", "");
+            tests_per_million = Integer.parseInt(splited);
+        }
+
+        
         Object obj_total_tests = obj.getJSONArray("response").getJSONObject(0).getJSONObject("tests").get("total");
         int total_tests = verifyIfObjectHaveNullValue(obj_total_tests) ? 0 : (Integer) obj_total_tests;
 
