@@ -2,6 +2,7 @@ package tqs.hw1.cache;
 
 import java.sql.Timestamp;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,6 +51,11 @@ class CacheTest {
         byCountry.setDaysearch("2022-04-22");
         byCountry.setCreationDate(new Timestamp(System.currentTimeMillis()));
 
+    }
+
+    @AfterEach
+    void tearDown() {
+        repository.deleteAll();
     }
 
     @Test
@@ -177,5 +183,7 @@ class CacheTest {
 
         verify(repository, times(0)).save(byCountry);
     }
+
+    //TODO: fazer testes para a cena dos hits e dos misses
 
 }

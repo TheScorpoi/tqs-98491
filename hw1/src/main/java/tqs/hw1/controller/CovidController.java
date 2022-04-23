@@ -27,8 +27,7 @@ public class CovidController {
     @GetMapping("/byCountry/{country}")
     public ResponseEntity<ByCountry> getCovidDataByCountry(@PathVariable String country)
             throws URISyntaxException, ParseException {
-        ByCountry result = covidAPI.getCovidDataByCountry(country);
-        return new ResponseEntity<ByCountry>(result, HttpStatus.OK);
+        return new ResponseEntity<>(covidAPI.getCovidDataByCountry(country), HttpStatus.OK);
     }
     
     @GetMapping("/byCountryAndDay/{country}/{day}")
