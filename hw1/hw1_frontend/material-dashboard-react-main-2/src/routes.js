@@ -37,7 +37,7 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import RTL from "layouts/rtl";
+import RTL from "layouts/cache";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -53,7 +53,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "RTL",
+    name: "Cache Stats",
     key: "rtl",
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
     route: "/rtl",

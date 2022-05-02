@@ -64,7 +64,7 @@ public class CovidAPI {
     }
     
     public String getCacheStats() {
-        return "{\"Cache_hits\":" + covidCache.getN_hits() + "\"Cache_misses\":" + covidCache.getN_misses() + "}";
+        return "{\"Cache_hits\":" + covidCache.getN_hits() + ", \"Cache_misses\":" + covidCache.getN_misses() + "}";
     }
 
     public ByCountry convertJsonToByCountryClass(String apiResponse) throws ParseException {

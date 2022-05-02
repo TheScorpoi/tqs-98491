@@ -45,6 +45,7 @@ export default function CovidData() {
 
   React.useEffect(() => {
     setCOUNTRY("france");
+    setDATE(date);
     console.log("COUNTRY: ---- ", COUNTRY);
     api
       .get(`byCountry/${COUNTRY}`)
