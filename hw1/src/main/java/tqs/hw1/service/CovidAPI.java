@@ -49,10 +49,10 @@ public class CovidAPI {
     public ByCountry getCovidDataByCountryAndDay(String country, String day) throws URISyntaxException, ParseException {
         // https://covid-193.p.rapidapi.com/history?country=Portugal&day=2020-04-01 example of url    
         URIBuilder builder = new URIBuilder(URL_BASE + "/history");
-    
+
         builder.setParameter("country", country);
         builder.setParameter("day", day);
-        
+
         if (covidCache.getCovidDataByCountryAndDay(country, day) == null) {
             String apiResponse = httpClient.request(builder.build().toString());
             ByCountry result = convertJsonToByCountryClass(apiResponse);
@@ -61,7 +61,10 @@ public class CovidAPI {
         } else {
             return covidCache.getCovidDataByCountryAndDay(country, day);
         }
-
+    }
+    
+    public String getCacheStats() {
+        return "{\"Cache_hits\":" + covidCache.getN_hits() + "\"Cache_misses\":" + covidCache.getN_misses() + "}";
     }
 
     public ByCountry convertJsonToByCountryClass(String apiResponse) throws ParseException {
@@ -209,4 +212,5 @@ public class CovidAPI {
         }
 
     }
+
 }
